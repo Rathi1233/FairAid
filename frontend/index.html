@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FairAid - NGO Authentication</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="auth-wrapper">
+        <div class="glass auth-card" id="authCard">
+            
+            <!-- Login Form -->
+            <div id="loginSection">
+                <div class="text-center mb-5">
+                    <h1 class="text-gradient">FairAid</h1>
+                    <p class="text-muted">Welcome back! Please login to your NGO account.</p>
+                </div>
+                
+                <div id="loginAlert" class="alert bg-error hidden"></div>
+
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" id="loginEmail" class="form-control" required placeholder="ngo@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="loginPassword" class="form-control" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted">Don't have an account? <a href="#" id="showSignup" class="text-gradient" style="text-decoration: none; font-weight: 500;">Register NGO</a></p>
+                </div>
+            </div>
+
+            <!-- Signup Form -->
+            <div id="signupSection" class="hidden">
+                <div class="text-center mb-5">
+                    <h1 class="text-gradient">Join FairAid</h1>
+                    <p class="text-muted">Register your NGO to ensure fair aid distribution.</p>
+                </div>
+
+                <div id="signupAlert" class="alert bg-error hidden"></div>
+
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label class="form-label">NGO Name</label>
+                        <input type="text" id="signupNgoName" class="form-control" required placeholder="e.g. Global Relief">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" id="signupEmail" class="form-control" required placeholder="ngo@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="signupPassword" class="form-control" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Register NGO</button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted">Already registered? <a href="#" id="showLogin" class="text-gradient" style="text-decoration: none; font-weight: 500;">Sign In</a></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+Flask
+Flask-CORS
+pandas
+scikit-learn
+Werkzeug
+PyJWT
+python-dotenv
+firebase-admin
+requests

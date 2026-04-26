@@ -1,0 +1,11 @@
+ID,Gender,Location,IncomeLevel,FamilySize,Dependents,HealthCondition,FoodAvailability,EmploymentStatus,ReceivedHelp
+1,Male,Rural,Low,6,3,Critical,Low,Unemployed,Yes
+2,Female,Urban,Medium,3,1,Moderate,Medium,DailyWage,No
+3,Female,Rural,Low,5,2,Healthy,Low,Unemployed,No
+4,Male,Urban,High,2,0,Healthy,High,Stable,Yes
+5,Female,Rural,Low,7,4,Critical,Low,Unemployed,Yes
+6,Male,Urban,Medium,4,2,Moderate,Medium,DailyWage,No
+7,Female,Rural,Low,6,3,Critical,Low,Unemployed,No
+8,Male,Urban,High,1,0,Healthy,High,Stable,Yes
+9,Female,Rural,Medium,5,2,Moderate,Medium,DailyWage,No
+10,Male,Rural,Low,8,5,Critical,Low,Unemployed,Yes

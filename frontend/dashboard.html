@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FairAid - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <nav class="navbar glass">
+        <div class="navbar-brand">
+            <span class="text-gradient">FairAid</span>
+        </div>
+        <div class="navbar-user">
+            <span class="text-muted" id="userNgoName">NGO Name</span>
+            <button id="logoutBtn" class="btn btn-outline" style="padding: 0.4rem 1rem; font-size: 0.85rem;">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <!-- Upload Section -->
+        <div id="uploadSection" class="glass mb-5" style="padding: 2rem;">
+            <h2>Data Source</h2>
+            <p class="text-muted mb-4">Upload your beneficiary survey data (CSV) to analyze distribution fairness.</p>
+            
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📂</div>
+                <h3>Click to upload CSV</h3>
+                <p class="text-muted mt-2">or drag and drop here</p>
+                <input type="file" id="fileInput" accept=".csv">
+            </div>
+            
+            <div id="uploadAlert" class="alert mt-3 hidden"></div>
+        </div>
+
+        <!-- Analysis Controls -->
+        <div id="controlsSection" class="glass mb-4 hidden" style="padding: 2rem;">
+            <div class="d-flex justify-between align-center mb-3">
+                <div>
+                    <h2>Need Threshold Configuration</h2>
+                    <p class="text-muted">Set the minimum Need Score to classify a person as HIGH NEED.</p>
+                </div>
+                <button id="analyzeBtn" class="btn btn-primary">Run Analysis</button>
+            </div>
+            
+            <div class="slider-container">
+                <div class="d-flex justify-between mb-2">
+                    <span class="form-label">Threshold: <span id="thresholdValue" class="text-gradient" style="font-size: 1.1rem; font-weight: 700;">8.0</span></span>
+                </div>
+                <input type="range" id="thresholdSlider" class="slider" min="0" max="10" step="0.1" value="8.0">
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="hidden">
+            
+            <div id="statusAlert" class="alert mb-4" style="padding: 1.5rem; display: block; font-size: 1.1rem; font-weight: 500;">
+                <!-- Filled via JS -->
+            </div>
+            
+            <div id="firebaseStatus" class="glass mb-4 hidden" style="padding: 1rem 1.5rem; border-left: 4px solid #f59e0b; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.2rem;">🔥</span> <span><strong>Data Stored in Firebase:</strong> Analysis results and records synced to cloud.</span>
+            </div>
+
+            <!-- Metrics Grid -->
+            <div class="dashboard-grid mb-4">
+                <div class="col-4 glass metric-card">
+                    <div class="metric-title">Total Beneficiaries</div>
+                    <div class="metric-value text-gradient" id="metricTotal">0</div>
+                </div>
+                <div class="col-4 glass metric-card">
+                    <div class="metric-title">High Need Count</div>
+                    <div class="metric-value text-gradient" id="metricHighNeed">0</div>
+                </div>
+                <div class="col-4 glass metric-card">
+                    <div class="metric-title">Need Satisfaction Rate</div>
+                    <div class="metric-value text-gradient" id="metricSatisfaction">0%</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Top People -->
+                <div class="col-6 glass mb-4" style="padding: 1.5rem;">
+                    <h3>🔥 Top People by Need</h3>
+                    <p class="text-muted mb-3">Highest need scores across all data.</p>
+                    <div class="table-container">
+                        <table id="topPeopleTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Need Score</th>
+                                    <th>Received Help</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Unfair Cases -->
+                <div class="col-6 glass mb-4" style="padding: 1.5rem;">
+                    <h3 class="status-error">🚨 Unfair Cases</h3>
+                    <p class="text-muted mb-3">High-need individuals who did NOT receive help.</p>
+                    <div class="table-container">
+                        <table id="unfairCasesTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Need Score</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Predictions -->
+                <div class="col-8 glass mb-4" style="padding: 1.5rem;">
+                    <h3>🤖 ML Predictions vs Reality</h3>
+                    <div class="table-container">
+                        <table id="predictionsTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Need Score</th>
+                                    <th>Actual Help</th>
+                                    <th>Predicted Help</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="col-4 glass mb-4 bg-info" style="padding: 1.5rem;">
+                    <h3>Action Plan</h3>
+                    <ul class="recommendation-list mt-3" id="recommendationList">
+                        <!-- Filled via JS -->
+                    </ul>
+
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 1.5rem 0;">
+                    
+                    <h3 class="text-gradient">✨ AI Insights & Recommendations</h3>
+                    <p class="text-muted mb-3" style="font-size: 0.85rem;">Powered by OpenRouter (Mistral-7B)</p>
+                    <button id="aiInsightBtn" class="btn btn-primary mb-3" style="width: 100%;">Generate AI Insights</button>
+                    <button id="aiRecBtn" class="btn btn-outline mb-3" style="width: 100%; border-color: var(--primary); color: var(--primary);">Generate AI Recommendations</button>
+                    
+                    <div id="aiInsightResult" class="hidden mb-3" style="background: rgba(0,0,0,0.2); border-left: 3px solid var(--primary); padding: 1rem; border-radius: 8px; font-size: 0.9rem; line-height: 1.6;">
+                    </div>
+                    <div id="aiRecResult" class="hidden" style="background: rgba(0,0,0,0.2); border-left: 3px solid var(--warning); padding: 1rem; border-radius: 8px; font-size: 0.9rem; line-height: 1.6;">
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
