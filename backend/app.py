@@ -34,6 +34,10 @@ else:
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/')
+def home():
+    return "FairAid backend is running"
+
 app.config['SECRET_KEY'] = 'fairaid_super_secret_key_12345'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 
